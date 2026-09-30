@@ -25,7 +25,7 @@ C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sampling_Circuitry_116.hpp:36:10:bool sds110::Sampling_Circuitry_116::running() const	1
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sampling_Circuitry_116.hpp:39:10:bool sds110::Sampling_Circuitry_116::dmaReady() const	3
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sampling_Circuitry_116.hpp:51:10:void sds110::Sampling_Circuitry_116::setHopReadyHook(HopReadyHook, void*)	1
-C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:66:29:sds110::Sampling_Circuitry_116& sds110::Sensor_Unit_112::sampling()	1
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:71:29:sds110::Sampling_Circuitry_116& sds110::Sensor_Unit_112::sampling()	1
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Processing_Module_120/Processing_Module_120.hpp:40:22:sds110::Sensor_Unit_112& sds110::Processing_Module_120::unit()	1
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Harness/SimScenario.hpp:25:13:bool sds110::simScenarioFromCommand(uint32_t, SimScenario&)	4
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Harness/Signal_Simulator.hpp:61:11:float sds110::Signal_Simulator::trueAzimuth() const	1
@@ -47,9 +47,9 @@ C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6
 ../Core/SDS_110/Infrastructure/Tasks/ProcessingTask.cpp:29:6:static void sds110::ProcessingTask::onHopReadyISR(void*)	1
 ../Core/SDS_110/Infrastructure/Tasks/ProcessingTask.cpp:34:6:bool sds110::ProcessingTask::overloaded() const	1
 ../Core/SDS_110/Infrastructure/Tasks/ProcessingTask.cpp:39:6:virtual void sds110::ProcessingTask::waitForWork()	9
-../Core/SDS_110/Infrastructure/Tasks/ProcessingTask.cpp:56:6:void sds110::ProcessingTask::updateSource()	10
-../Core/SDS_110/Infrastructure/Tasks/ProcessingTask.cpp:78:6:void sds110::ProcessingTask::process()	6
-../Core/SDS_110/Infrastructure/Tasks/ProcessingTask.cpp:93:6:virtual void sds110::ProcessingTask::runOnce()	7
+../Core/SDS_110/Infrastructure/Tasks/ProcessingTask.cpp:56:6:void sds110::ProcessingTask::updateSource()	13
+../Core/SDS_110/Infrastructure/Tasks/ProcessingTask.cpp:88:6:void sds110::ProcessingTask::process()	6
+../Core/SDS_110/Infrastructure/Tasks/ProcessingTask.cpp:103:6:virtual void sds110::ProcessingTask::runOnce()	7
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:184:28:T SDS_Data::getValue(const T&) const [with T = float]	2
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:184:28:T SDS_Data::getValue(const T&) const [with T = SDS_Mode]	2
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:177:31:bool SDS_Data::tryGetValue(const T&, T&) const [with T = long unsigned int]	2

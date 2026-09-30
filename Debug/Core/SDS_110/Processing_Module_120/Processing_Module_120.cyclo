@@ -11,16 +11,16 @@ C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Frame_Assembler.hpp:38:7:constexpr sds110::Frame_Assembler::Frame_Assembler()	1
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:17:14:sds110::Sensor_Unit_112::Sensor_Unit_112(uint32_t)	1
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:19:10:bool sds110::Sensor_Unit_112::init(SAI_HandleTypeDef*, I2C_HandleTypeDef*)	1
-C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:24:10:bool sds110::Sensor_Unit_112::start()	1
-C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:30:10:bool sds110::Sensor_Unit_112::nextFrame(const sds110::AnalysisFrame*&)	3
-C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:46:10:void sds110::Sensor_Unit_112::releaseOldest()	1
-C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:53:15:sds110::MicFrame* sds110::Sensor_Unit_112::nextHop()	1
-C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:58:10:void sds110::Sensor_Unit_112::releaseHop(sds110::MicFrame*)	1
-C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:61:14:uint32_t sds110::Sensor_Unit_112::lastPreCycles() const	1
-C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:62:14:uint32_t sds110::Sensor_Unit_112::lastAsmCycles() const	1
-C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:63:33:const sds110::Microphone_Array_114& sds110::Sensor_Unit_112::array() const	1
-C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:64:30:const sds110::Pre_Processor_118& sds110::Sensor_Unit_112::preprocessor() const	1
-C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:66:29:sds110::Sampling_Circuitry_116& sds110::Sensor_Unit_112::sampling()	1
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:29:10:bool sds110::Sensor_Unit_112::start()	1
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:35:10:bool sds110::Sensor_Unit_112::nextFrame(const sds110::AnalysisFrame*&)	3
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:51:10:void sds110::Sensor_Unit_112::releaseOldest()	1
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:58:15:sds110::MicFrame* sds110::Sensor_Unit_112::nextHop()	1
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:63:10:void sds110::Sensor_Unit_112::releaseHop(sds110::MicFrame*)	1
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:66:14:uint32_t sds110::Sensor_Unit_112::lastPreCycles() const	1
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:67:14:uint32_t sds110::Sensor_Unit_112::lastAsmCycles() const	1
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:68:33:const sds110::Microphone_Array_114& sds110::Sensor_Unit_112::array() const	1
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:69:30:const sds110::Pre_Processor_118& sds110::Sensor_Unit_112::preprocessor() const	1
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Sensor_Unit_112.hpp:71:29:sds110::Sampling_Circuitry_116& sds110::Sensor_Unit_112::sampling()	1
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/DspScratch.hpp:21:15:float* sds110::dspScratch()	1
 ../Core/SDS_110/Processing_Module_120/Feature_Extraction_Module_122/Feature_Extraction_Module_122.hpp:63:18:const float* sds110::Feature_Extraction_Module_122::magnitude() const	1
 ../Core/SDS_110/Processing_Module_120/Machine_Learning_Module_124/Machine_Learning_Module_124.hpp:52:15:float sds110::Machine_Learning_Module_124::ShadowStats::detectAgreement() const	2

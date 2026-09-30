@@ -39,6 +39,7 @@ Core/SDS_110/Sensor_Unit_112/Sampling_Circuitry_116.o: \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_ll_usb.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pcd_ex.h \
  C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Config.hpp \
+ C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Board.h \
  ../Core/SDS_110/Sensor_Unit_112/Microphone_Array_114.hpp \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
  ../Core/SDS_110/Sensor_Unit_112/ADAU7118_Registers.hpp \
@@ -82,6 +83,7 @@ Core/SDS_110/Sensor_Unit_112/Sampling_Circuitry_116.o: \
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_ll_usb.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pcd_ex.h:
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Config.hpp:
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Board.h:
 ../Core/SDS_110/Sensor_Unit_112/Microphone_Array_114.hpp:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
 ../Core/SDS_110/Sensor_Unit_112/ADAU7118_Registers.hpp:

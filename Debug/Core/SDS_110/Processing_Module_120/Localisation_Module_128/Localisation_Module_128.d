@@ -2,6 +2,7 @@ Core/SDS_110/Processing_Module_120/Localisation_Module_128/Localisation_Module_1
  ../Core/SDS_110/Processing_Module_120/Localisation_Module_128/Localisation_Module_128.cpp \
  ../Core/SDS_110/Processing_Module_120/Localisation_Module_128/Localisation_Module_128.hpp \
  C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Config.hpp \
+ C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Board.h \
  C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Microphone_Array_114.hpp \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
  C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Processing_Module_120/Correlation_Processing_Module_126/Correlation_Processing_Module_126.hpp \
@@ -16,6 +17,7 @@ Core/SDS_110/Processing_Module_120/Localisation_Module_128/Localisation_Module_1
  C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/Azimuth.hpp
 ../Core/SDS_110/Processing_Module_120/Localisation_Module_128/Localisation_Module_128.hpp:
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Config.hpp:
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Board.h:
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Microphone_Array_114.hpp:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Processing_Module_120/Correlation_Processing_Module_126/Correlation_Processing_Module_126.hpp:

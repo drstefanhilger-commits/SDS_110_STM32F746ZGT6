@@ -3,6 +3,7 @@ Core/SDS_110/Processing_Module_120/Output_Interface_130/Output_Interface_130.o: 
  ../Core/SDS_110/Processing_Module_120/Output_Interface_130/Output_Interface_130.hpp \
  C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Data_Interface_140/Candidate_Report_140.hpp \
  C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Config.hpp \
+ C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Board.h \
  C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/UtcClock.hpp \
  C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Processing_Module_120/Localisation_Module_128/Localisation_Module_128.hpp \
  C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Microphone_Array_114.hpp \
@@ -23,6 +24,7 @@ Core/SDS_110/Processing_Module_120/Output_Interface_130/Output_Interface_130.o: 
 ../Core/SDS_110/Processing_Module_120/Output_Interface_130/Output_Interface_130.hpp:
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Data_Interface_140/Candidate_Report_140.hpp:
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Config.hpp:
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/SDS_110_Board.h:
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/UtcClock.hpp:
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Processing_Module_120/Localisation_Module_128/Localisation_Module_128.hpp:
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Microphone_Array_114.hpp:
