@@ -7,7 +7,7 @@
 #include "stm32f7xx_hal.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "main.h"                     // LED_ERROR_Pin (CubeMX)
+#include "Infrastructure/Driver/StatusLed.hpp"   // LED je Zielboard
 
 namespace {
 
@@ -39,7 +39,7 @@ void itmPrint(const char* t)
     taskDISABLE_INTERRUPTS();
     if (!g_inFatal) {                        // Fehler während der Anzeige: nur anhalten
         g_inFatal = true;
-        HAL_GPIO_WritePin(LED_ERROR_GPIO_Port, LED_ERROR_Pin, GPIO_PIN_SET);
+        sds110::led::setError(true);
         itmPrint(title); itmPrint(": "); itmPrint(detail.s); itmPrint("\r\n");
     }
     if (CoreDebug->DHCSR & CoreDebug_DHCSR_C_DEBUGEN_Msk) __BKPT(0);   // Debugger: hier anhalten

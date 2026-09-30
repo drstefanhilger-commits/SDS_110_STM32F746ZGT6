@@ -276,7 +276,9 @@ static void MX_I2C2_Init(void)
 {
 
   /* USER CODE BEGIN I2C2_Init 0 */
-
+#if SDS110_BOARD_DISCO
+  return;                       // Discovery-Board: Pins anders belegt, nicht initialisieren (SDS_110_Board.h)
+#endif
   /* USER CODE END I2C2_Init 0 */
 
   /* USER CODE BEGIN I2C2_Init 1 */
@@ -324,7 +326,9 @@ static void MX_QUADSPI_Init(void)
 {
 
   /* USER CODE BEGIN QUADSPI_Init 0 */
-
+#if SDS110_BOARD_DISCO
+  return;                       // Discovery-Board: Pins anders belegt, nicht initialisieren (SDS_110_Board.h)
+#endif
   /* USER CODE END QUADSPI_Init 0 */
 
   /* USER CODE BEGIN QUADSPI_Init 1 */
@@ -812,7 +816,9 @@ static void MX_USART1_UART_Init(void)
 {
 
   /* USER CODE BEGIN USART1_Init 0 */
-
+#if SDS110_BOARD_DISCO
+  return;                       // Discovery-Board: Pins anders belegt, nicht initialisieren (SDS_110_Board.h)
+#endif
   /* USER CODE END USART1_Init 0 */
 
   /* USER CODE BEGIN USART1_Init 1 */
@@ -847,7 +853,9 @@ static void MX_USART3_UART_Init(void)
 {
 
   /* USER CODE BEGIN USART3_Init 0 */
-
+#if SDS110_BOARD_DISCO
+  return;                       // Discovery-Board: Pins anders belegt, nicht initialisieren (SDS_110_Board.h)
+#endif
   /* USER CODE END USART3_Init 0 */
 
   /* USER CODE BEGIN USART3_Init 1 */
@@ -898,7 +906,9 @@ static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* USER CODE BEGIN MX_GPIO_Init_1 */
-
+#if SDS110_BOARD_DISCO
+  return;                       // Discovery-Board: EN_ESP/EN_ADA/LEDs/MAG_INT anders belegt, nicht initialisieren (SDS_110_Board.h)
+#endif
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
