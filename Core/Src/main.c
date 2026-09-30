@@ -394,7 +394,9 @@ static void MX_SAI1_Init(void)
 {
 
   /* USER CODE BEGIN SAI1_Init 0 */
-
+#if !SDS110_SAI_ENABLED
+  return;                       // SAI-Hardwarefehler: SAI1 nicht initialisieren (SDS_110_Board.h)
+#endif
   /* USER CODE END SAI1_Init 0 */
 
   /* USER CODE BEGIN SAI1_Init 1 */

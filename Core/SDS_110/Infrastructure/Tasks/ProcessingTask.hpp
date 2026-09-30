@@ -55,6 +55,7 @@ private:
     uint32_t simCmd_     = SIM_CMD_DEFAULT;   // zuletzt gelesener Wert von SDS_Data::simulation (Standard 1)
     uint32_t simInitCmd_ = 0;                 // Wert, mit dem der Simulator zuletzt gestartet wurde
     bool hwTimeout_  = false;      // Meldung "keine Hops" nur einmal je Ausfall
+    bool simOffIgnored_ = false;   // SDS110_SAI_ENABLED 0: Meldung zu Typ 3 = 0 nur einmal
     uint32_t runStartTick_ = 0, runEndTick_ = 0;
     float    simMs_ = 0;           // Simulator je Hop (ms, geglättet) -> LCD "ms S.."
     SDS_Data& dm_ = SDS_Data::instance();

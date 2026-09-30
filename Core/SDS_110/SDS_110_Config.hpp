@@ -5,6 +5,7 @@
  */
 #pragma once
 #include <cstdint>
+#include "SDS_110_Board.h"   // SDS110_SAI_ENABLED
 
 namespace sds110 {
 
