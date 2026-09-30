@@ -35,6 +35,7 @@ Schnittstellenbeschreibung (Interface Control Document) zwischen der Sensoreinhe
 ## 2. Transport
 
 - **Physik:** USB Full Speed, Klasse CDC-ACM (virtueller COM-Port). Die Baudrate spielt keine Rolle.
+- **STM32F746ZGT6-Board:** USART1 über CP2102N (USB-C #2), virtueller COM-Port des CP210x-Treibers, **921600 Baud, 8N1, ohne Flusssteuerung** (`SDS110_UART_BAUD`). READ-Streaming ist darüber nicht möglich (Bandbreite).
 - **Kommandos PC → SDS:**
   - **Bytestrom:** Die Firmware setzt die USB-Pakete zu einem Bytestrom zusammen und löst die Kommandos über Magic und Länge heraus (`CommandAssembler.hpp`, seit 28.09.2026). Ein Paket darf mehrere Kommandos oder den Teil eines Kommandos enthalten; der Host fasst dicht folgende Schreibvorgänge oft zusammen (Befund 32).
   - **Rest eines Kommandos:** Folgt der Rest nicht innerhalb von 20 ms, wird der Anfang verworfen.

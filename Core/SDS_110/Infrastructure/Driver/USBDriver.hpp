@@ -2,6 +2,8 @@
  * USBDriver.hpp  (Infrastructure/Driver)
  *
  * Sendeseite CDC: Wire-Format aus SDS_Structs.hpp + CRC32 -> TX-Ringpuffer -> CDC.
+ * STM32F746ZGT6-Board: Transport über USART1/CP2102N statt USB-CDC (SDS110_LINK_UART,
+ * SDS_110_Board.h); Nachrichtenformat unverändert.
  * Wird von LoggerTask (Logging), Processing_Module_120 (READ-Streaming) und von
  * Output_Interface_130 (UnitReport) genutzt.
  *
@@ -44,8 +46,10 @@ public:
     /// generische Nachricht (128 Byte Payload)
     static bool sendMessage(uint32_t id, uint32_t timestamp, const MessageData& data, uint32_t waitMs = 0);
 
-    /// aus CDC_TransmitCplt_FS (ISR-Kontext): nächsten Block übertragen
+    /// aus CDC_TransmitCplt_FS bzw. HAL_UART_TxCpltCallback (ISR-Kontext): nächsten Block übertragen
     static void onTransmitComplete();
+    /// Transport starten: USART1 (Baudrate, IRQ, Empfang) bei SDS110_LINK_UART, sonst nichts (USB-CDC)
+    static void startLink();
 
     /// Diagnose: verworfene Nachrichten (Puffer voll / USB nicht konfiguriert)
     static uint32_t txDropped() { return txDropped_; }

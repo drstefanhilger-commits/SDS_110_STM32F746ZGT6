@@ -4,12 +4,31 @@
 #include "USBDriver.hpp"
 #include "Infrastructure/Utils/crc32.hpp"
 #include "usbd_cdc_if.h"
+#include "SDS_110_Board.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "cmsis_os2.h"
 #include <cstring>
 
 extern "C" USBD_HandleTypeDef hUsbDeviceFS;
+
+#if SDS110_LINK_UART
+// ---------------------------------------------------------------- Transport USART1 (CP2102N)
+// STM32F746ZGT6-Board: der PC hängt über den CP2102N an USART1 (SDS_110_Board.h). Senden per
+// Interrupt aus txBuf_ (HAL_UART_Transmit_IT), Empfang blockweise bis Leerlauf
+// (HAL_UARTEx_ReceiveToIdle_IT) -> USBTask_OnReceive wie bei CDC_Receive_FS.
+// USART1-IRQ Priorität 5 (= configMAX_SYSCALL_INTERRUPT_PRIORITY): kick() läuft im ISR oder im
+// kritischen Abschnitt, der ihn maskiert. Der IRQ ist in CubeMX NICHT aktiviert (Handler hier).
+extern "C" UART_HandleTypeDef huart1;
+extern "C" void USBTask_OnReceive(uint8_t* buf, uint32_t len);
+extern "C" volatile uint32_t usb_debug_counter;
+
+namespace {
+volatile bool s_uartTxBusy = false;
+uint8_t s_uartRx[64];                              // ein Block wie ein USB-FS-Paket (USBTask::MAX_LENGTH)
+void uartStartRx() { (void)HAL_UARTEx_ReceiveToIdle_IT(&huart1, s_uartRx, sizeof(s_uartRx)); }
+}
+#endif
 
 namespace sds110 {
 
@@ -24,11 +43,31 @@ volatile uint32_t USBDriver::head_      = 0;
 volatile uint32_t USBDriver::tail_      = 0;
 volatile uint32_t USBDriver::txDropped_ = 0;
 
+#if SDS110_LINK_UART
+void USBDriver::startLink()
+{
+    if (huart1.Init.BaudRate != SDS110_UART_BAUD) {   // CubeMX-Wert abweichend: Baudrate hier setzen
+        huart1.Init.BaudRate = SDS110_UART_BAUD;
+        (void)HAL_UART_Init(&huart1);
+    }
+    HAL_NVIC_SetPriority(USART1_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(USART1_IRQn);
+    uartStartRx();
+}
+
+bool USBDriver::linkReady()
+{
+    return huart1.gState != HAL_UART_STATE_RESET;     // UART ohne Verbindungszustand: immer senden
+}
+#else
+void USBDriver::startLink() {}
+
 // ---------------------------------------------------------------- Ringpuffer
 bool USBDriver::linkReady()
 {
     return hUsbDeviceFS.dev_state == USBD_STATE_CONFIGURED && hUsbDeviceFS.pClassData != nullptr;
 }
+#endif
 
 bool USBDriver::enqueue(const uint8_t* buf, uint32_t len)
 {
@@ -48,8 +87,12 @@ bool USBDriver::enqueue(const uint8_t* buf, uint32_t len)
 void USBDriver::kick()
 {
     if (!linkReady()) return;
+#if SDS110_LINK_UART
+    if (s_uartTxBusy) return;                           // Transfer läuft, TxCplt lädt nach
+#else
     auto* hcdc = static_cast<USBD_CDC_HandleTypeDef*>(hUsbDeviceFS.pClassData);
     if (hcdc->TxState != 0U) return;                    // Transfer läuft, ISR lädt nach
+#endif
 
     uint32_t n = head_ - tail_;
     if (n == 0) return;
@@ -61,8 +104,13 @@ void USBDriver::kick()
     std::memcpy(txBuf_ + first, &ring_[0], n - first);
     tail_ = tail_ + n;
 
+#if SDS110_LINK_UART
+    s_uartTxBusy = true;
+    if (HAL_UART_Transmit_IT(&huart1, txBuf_, static_cast<uint16_t>(n)) != HAL_OK) s_uartTxBusy = false;
+#else
     USBD_CDC_SetTxBuffer(&hUsbDeviceFS, txBuf_, n);
     USBD_CDC_TransmitPacket(&hUsbDeviceFS);
+#endif
 }
 
 void USBDriver::onTransmitComplete()
@@ -168,3 +216,41 @@ extern "C" void USBDriver_OnTransmitComplete(void)
 {
     sds110::USBDriver::onTransmitComplete();
 }
+
+#if SDS110_LINK_UART
+// ---------------------------------------------------------------- HAL-Hooks USART1
+extern "C" {
+
+void USART1_IRQHandler(void)
+{
+    HAL_UART_IRQHandler(&huart1);
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart)
+{
+    if (huart != &huart1) return;
+    s_uartTxBusy = false;
+    sds110::USBDriver::onTransmitComplete();
+}
+
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t size)
+{
+    if (huart != &huart1) return;
+    if (size > 0) {
+        ++usb_debug_counter;                           // LED_COMM (LoggerTask)
+        USBTask_OnReceive(s_uartRx, size);
+    }
+    uartStartRx();
+}
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
+{
+    if (huart != &huart1) return;
+    // Überlauf/Rahmenfehler: Empfang neu starten; ein abgebrochener Sendeblock ist verloren
+    if (huart->gState == HAL_UART_STATE_READY) s_uartTxBusy = false;
+    uartStartRx();
+    sds110::USBDriver::onTransmitComplete();
+}
+
+} // extern "C"
+#endif
