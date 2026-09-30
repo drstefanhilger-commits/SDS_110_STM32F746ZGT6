@@ -37,11 +37,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00007801  00000000  00000000  000474f2  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0002d901  00000000  00000000  0004ecf3  2**0
+ 17 .debug_line   0002d902  00000000  00000000  0004ecf3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0010b2db  00000000  00000000  0007c5f4  2**0
+ 18 .debug_str    0010b2db  00000000  00000000  0007c5f5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  001878cf  2**0
+ 19 .comment      00000043  00000000  00000000  001878d0  2**0
                   CONTENTS, READONLY
  20 .debug_frame  000094cc  00000000  00000000  00187914  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -3380,7 +3380,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
  8001650:	681b      	ldr	r3, [r3, #0]
  8001652:	4a46      	ldr	r2, [pc, #280]	@ (800176c <HAL_SAI_MspInit+0x134>)
  8001654:	4293      	cmp	r3, r2
- 8001656:	f040 8084 	bne.w	8001762 <HAL_SAI_MspInit+0x12a>
+ 8001656:	f040 8085 	bne.w	8001764 <HAL_SAI_MspInit+0x12c>
     {
     /* Peripheral clock enable */
 
@@ -3516,50 +3516,49 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
  8001726:	4b15      	ldr	r3, [pc, #84]	@ (800177c <HAL_SAI_MspInit+0x144>)
  8001728:	f44f 7280 	mov.w	r2, #256	@ 0x100
  800172c:	61da      	str	r2, [r3, #28]
-    hdma_sai1_a.Init.Priority = DMA_PRIORITY_LOW;
+    hdma_sai1_a.Init.Priority = DMA_PRIORITY_HIGH;
  800172e:	4b13      	ldr	r3, [pc, #76]	@ (800177c <HAL_SAI_MspInit+0x144>)
- 8001730:	2200      	movs	r2, #0
- 8001732:	621a      	str	r2, [r3, #32]
+ 8001730:	f44f 3200 	mov.w	r2, #131072	@ 0x20000
+ 8001734:	621a      	str	r2, [r3, #32]
     hdma_sai1_a.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
- 8001734:	4b11      	ldr	r3, [pc, #68]	@ (800177c <HAL_SAI_MspInit+0x144>)
- 8001736:	2200      	movs	r2, #0
- 8001738:	625a      	str	r2, [r3, #36]	@ 0x24
+ 8001736:	4b11      	ldr	r3, [pc, #68]	@ (800177c <HAL_SAI_MspInit+0x144>)
+ 8001738:	2200      	movs	r2, #0
+ 800173a:	625a      	str	r2, [r3, #36]	@ 0x24
     if (HAL_DMA_Init(&hdma_sai1_a) != HAL_OK)
- 800173a:	4810      	ldr	r0, [pc, #64]	@ (800177c <HAL_SAI_MspInit+0x144>)
- 800173c:	f000 fa84 	bl	8001c48 <HAL_DMA_Init>
- 8001740:	4603      	mov	r3, r0
- 8001742:	2b00      	cmp	r3, #0
- 8001744:	d001      	beq.n	800174a <HAL_SAI_MspInit+0x112>
+ 800173c:	480f      	ldr	r0, [pc, #60]	@ (800177c <HAL_SAI_MspInit+0x144>)
+ 800173e:	f000 fa83 	bl	8001c48 <HAL_DMA_Init>
+ 8001742:	4603      	mov	r3, r0
+ 8001744:	2b00      	cmp	r3, #0
+ 8001746:	d001      	beq.n	800174c <HAL_SAI_MspInit+0x114>
     {
       Error_Handler();
- 8001746:	f7ff fca7 	bl	8001098 <Error_Handler>
+ 8001748:	f7ff fca6 	bl	8001098 <Error_Handler>
     }
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one stream to perform all the requested DMAs. */
     __HAL_LINKDMA(hsai,hdmarx,hdma_sai1_a);
- 800174a:	687b      	ldr	r3, [r7, #4]
- 800174c:	4a0b      	ldr	r2, [pc, #44]	@ (800177c <HAL_SAI_MspInit+0x144>)
- 800174e:	671a      	str	r2, [r3, #112]	@ 0x70
- 8001750:	4a0a      	ldr	r2, [pc, #40]	@ (800177c <HAL_SAI_MspInit+0x144>)
- 8001752:	687b      	ldr	r3, [r7, #4]
- 8001754:	6393      	str	r3, [r2, #56]	@ 0x38
+ 800174c:	687b      	ldr	r3, [r7, #4]
+ 800174e:	4a0b      	ldr	r2, [pc, #44]	@ (800177c <HAL_SAI_MspInit+0x144>)
+ 8001750:	671a      	str	r2, [r3, #112]	@ 0x70
+ 8001752:	4a0a      	ldr	r2, [pc, #40]	@ (800177c <HAL_SAI_MspInit+0x144>)
+ 8001754:	687b      	ldr	r3, [r7, #4]
+ 8001756:	6393      	str	r3, [r2, #56]	@ 0x38
 
     __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_a);
- 8001756:	687b      	ldr	r3, [r7, #4]
- 8001758:	4a08      	ldr	r2, [pc, #32]	@ (800177c <HAL_SAI_MspInit+0x144>)
- 800175a:	66da      	str	r2, [r3, #108]	@ 0x6c
- 800175c:	4a07      	ldr	r2, [pc, #28]	@ (800177c <HAL_SAI_MspInit+0x144>)
- 800175e:	687b      	ldr	r3, [r7, #4]
- 8001760:	6393      	str	r3, [r2, #56]	@ 0x38
+ 8001758:	687b      	ldr	r3, [r7, #4]
+ 800175a:	4a08      	ldr	r2, [pc, #32]	@ (800177c <HAL_SAI_MspInit+0x144>)
+ 800175c:	66da      	str	r2, [r3, #108]	@ 0x6c
+ 800175e:	4a07      	ldr	r2, [pc, #28]	@ (800177c <HAL_SAI_MspInit+0x144>)
+ 8001760:	687b      	ldr	r3, [r7, #4]
+ 8001762:	6393      	str	r3, [r2, #56]	@ 0x38
 
     }
 }
- 8001762:	bf00      	nop
- 8001764:	37a8      	adds	r7, #168	@ 0xa8
- 8001766:	46bd      	mov	sp, r7
- 8001768:	bd80      	pop	{r7, pc}
- 800176a:	bf00      	nop
+ 8001764:	bf00      	nop
+ 8001766:	37a8      	adds	r7, #168	@ 0xa8
+ 8001768:	46bd      	mov	sp, r7
+ 800176a:	bd80      	pop	{r7, pc}
  800176c:	40015804 	.word	0x40015804
  8001770:	200006e0 	.word	0x200006e0
  8001774:	40023800 	.word	0x40023800
