@@ -105,3 +105,25 @@ Schalter `SDS110_SAI_ENABLED` in `Core/SDS_110/SDS_110_Board.h`, Standard **0**:
   wird ignoriert und einmal als Fehlermeldung „SAI aus: nur Simulation“ gemeldet.
 
 Nach der Reparatur `SDS110_SAI_ENABLED` auf 1 setzen.
+
+## 6. PC-Verbindung über USART1 / CP2102N (30.09.2026)
+
+Befund am Board: RUN-LED (blau, Herzschlag des LoggerTask) blinkt, am PC erscheint aber kein
+COM-Port der Firmware. Ursache laut Schaltplan (Seite 7 „power“, Seite 8 „PROG“): USB-C #2
+„DATA/USBDEVICE“ führt über USBLC6 auf den **CP2102N** (U21, USB-UART-Wandler). Dessen TXD/RXD gehen
+über die Jumper **JM1/JM2** auf **USART1** (PA10 RX, PA9 TX). Der USB-OTG-FS-Port des STM32
+(PA11/PA12) ist nicht beschaltet – die USB-CDC-Firmware des Discovery-Boards kann hier keinen
+COM-Port liefern.
+
+Änderung (Schalter `SDS110_LINK_UART` in `SDS_110_Board.h`, Standard 1):
+
+* `USBDriver` sendet über USART1 (`HAL_UART_Transmit_IT` aus dem Ringpuffer), Empfang per
+  `HAL_UARTEx_ReceiveToIdle_IT` an `USBTask_OnReceive` – Nachrichtenformat (ICD) unverändert.
+* USART1-IRQ (Priorität 5) und `USART1_IRQHandler` in `USBDriver.cpp`; in CubeMX den USART1-IRQ
+  **nicht** aktivieren (sonst doppelter Handler).
+* Baudrate **921600** (`SDS110_UART_BAUD`, auch in `.ioc`/`main.c`). **Am PC-Monitor 921600 Baud,
+  8N1, ohne Flusssteuerung einstellen** – bei USB-CDC war die Baudrate egal. READ-Streaming
+  (1,6 MB/s) passt nicht über die UART; DETECT/CALIBRATE (Reports, Logger) schon.
+* Am PC erscheint der Port als „Silicon Labs CP210x USB to UART Bridge (COMx)“ (Treiber von
+  Silicon Labs); die COM-Nummer vergibt Windows neu – ggf. im Geräte-Manager auf COM5 umstellen.
+* Jumper JM1 und JM2 müssen gesteckt sein.
