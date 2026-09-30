@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "SDS_110_Wrapper.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -114,7 +114,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+  SDS110_MPU_Config();          // vor I-/D-Cache-Enable und HAL_Init (SRAM2 = DMA, nicht cachebar)
   /* USER CODE END 1 */
 
   /* Enable the CPU Cache */
@@ -138,7 +138,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  PrintfDriver();               // ITM/SWO (PB3) für printf und Fatal-Meldungen
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -167,6 +167,7 @@ int main(void)
   osKernelInitialize();
 
   /* USER CODE BEGIN RTOS_MUTEX */
+  SDS110_Init();                // ADAU7118 (I2C2) + SAI1, Module 112/120
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
@@ -188,6 +189,9 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+  SDS110_StartProcessingTask();   // Simulation (Standard) bzw. SAI1/DMA-Hops
+  SDS110_StartUSBTask();
+  SDS110_StartLoggerTask();       // Logger + Status-LEDs (kein LCD auf diesem Board)
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */

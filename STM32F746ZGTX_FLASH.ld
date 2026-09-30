@@ -38,13 +38,17 @@ ENTRY(Reset_Handler)
 /* Highest address of the user mode stack */
 _estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */
 
-_Min_Heap_Size = 0x200; /* required amount of heap */
-_Min_Stack_Size = 0x400; /* required amount of stack */
+_Min_Heap_Size = 0x800; /* required amount of heap (newlib: printf mit float) */
+_Min_Stack_Size = 0x800; /* required amount of stack (main + ISRs) */
 
 /* Memories definition */
 MEMORY
 {
-  RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 320K
+  /* SDS_110: DTCM 64 kB + SRAM1 240 kB (gecacht über die Standard-Speicherkarte). SRAM2 (16 kB)
+     ist getrennt: nicht cachebarer Bereich für DMA-Puffer (MPUDriver.h, Region 0).
+     Kein externes SDRAM auf diesem Board – alle SDS-Puffer liegen hier. */
+  RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 304K
+  RAM_NC (xrw)    : ORIGIN = 0x2004C000,   LENGTH = 16K
   FLASH    (rx)    : ORIGIN = 0x8000000,   LENGTH = 1024K
 }
 
@@ -164,6 +168,16 @@ SECTIONS
     _ebss = .;         /* define a global symbol at bss end */
     __bss_end__ = _ebss;
   } >RAM
+
+  /* SDS_110: DMA-Puffer ohne Cache-Pflege (SDS110_DMA_SECTION), SRAM2, per MPU nicht cachebar.
+     NOLOAD: der Inhalt wird von DMA bzw. init() geschrieben. */
+  .dma_nocache (NOLOAD) :
+  {
+    . = ALIGN(32);
+    *(.dma_nocache)
+    *(.dma_nocache*)
+    . = ALIGN(32);
+  } >RAM_NC
 
   /* User_heap_stack section, used to check that there is enough "RAM" Ram  type memory left */
   ._user_heap_stack :

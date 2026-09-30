@@ -22,7 +22,6 @@
 #include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -261,6 +260,12 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
+  extern uint32_t usb_debug_counter;
+
+  usb_debug_counter++;
+  extern void USBTask_OnReceive(uint8_t* buf, uint32_t len);
+  USBTask_OnReceive(Buf, *Len);
+
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
   return (USBD_OK);
@@ -311,6 +316,9 @@ static int8_t CDC_TransmitCplt_FS(uint8_t *Buf, uint32_t *Len, uint8_t epnum)
   UNUSED(Buf);
   UNUSED(Len);
   UNUSED(epnum);
+  /* nächsten Block aus dem TX-Ringpuffer senden (USBDriver.cpp) */
+  extern void USBDriver_OnTransmitComplete(void);
+  USBDriver_OnTransmitComplete();
   /* USER CODE END 13 */
   return result;
 }
