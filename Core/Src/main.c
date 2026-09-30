@@ -117,6 +117,14 @@ int main(void)
 
   /* USER CODE END 1 */
 
+  /* Enable the CPU Cache */
+
+  /* Enable I-Cache---------------------------------------------------------*/
+  SCB_EnableICache();
+
+  /* Enable D-Cache---------------------------------------------------------*/
+  SCB_EnableDCache();
+
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -322,7 +330,7 @@ static void MX_QUADSPI_Init(void)
   hqspi.Instance = QUADSPI;
   hqspi.Init.ClockPrescaler = 255;
   hqspi.Init.FifoThreshold = 1;
-  hqspi.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_NONE;
+  hqspi.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_HALFCYCLE;
   hqspi.Init.FlashSize = 1;
   hqspi.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_1_CYCLE;
   hqspi.Init.ClockMode = QSPI_CLOCK_MODE_0;
@@ -389,15 +397,16 @@ static void MX_SAI1_Init(void)
 
   /* USER CODE END SAI1_Init 1 */
   hsai_BlockA1.Instance = SAI1_Block_A;
-  hsai_BlockA1.Init.AudioMode = SAI_MODESLAVE_RX;
+  hsai_BlockA1.Init.AudioMode = SAI_MODEMASTER_RX;
   hsai_BlockA1.Init.Synchro = SAI_ASYNCHRONOUS;
   hsai_BlockA1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+  hsai_BlockA1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
   hsai_BlockA1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+  hsai_BlockA1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
   hsai_BlockA1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
   hsai_BlockA1.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA1.Init.CompandingMode = SAI_NOCOMPANDING;
-  hsai_BlockA1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-  if (HAL_SAI_InitProtocol(&hsai_BlockA1, SAI_PCM_LONG, SAI_PROTOCOL_DATASIZE_32BIT, 1) != HAL_OK)
+  if (HAL_SAI_InitProtocol(&hsai_BlockA1, SAI_PCM_LONG, SAI_PROTOCOL_DATASIZE_32BIT, 8) != HAL_OK)
   {
     Error_Handler();
   }
@@ -896,13 +905,20 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOG_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(EN_ESP_CTRL_GPIO_Port, EN_ESP_CTRL_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(EN_ADA_GPIO_Port, EN_ADA_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, EN_ESP_CTRLC13_Pin|USB2_VBUS_SENSE_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(EN_ESP_CTRL_GPIO_Port, EN_ESP_CTRL_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, LED_Green_Pin|LED_White_Pin|Led_Red_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOG, LED_RUN_Pin|LED_COMM_Pin|LED_ERROR_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : EN_ADA_Pin */
+  GPIO_InitStruct.Pin = EN_ADA_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(EN_ADA_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : EN_ESP_CTRL_Pin */
   GPIO_InitStruct.Pin = EN_ESP_CTRL_Pin;
@@ -911,19 +927,24 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(EN_ESP_CTRL_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : EN_ESP_CTRLC13_Pin USB2_VBUS_SENSE_Pin */
-  GPIO_InitStruct.Pin = EN_ESP_CTRLC13_Pin|USB2_VBUS_SENSE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  /*Configure GPIO pin : USB2_VBUS_SENSE_Pin */
+  GPIO_InitStruct.Pin = USB2_VBUS_SENSE_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(USB2_VBUS_SENSE_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LED_Green_Pin LED_White_Pin Led_Red_Pin */
-  GPIO_InitStruct.Pin = LED_Green_Pin|LED_White_Pin|Led_Red_Pin;
+  /*Configure GPIO pins : LED_RUN_Pin LED_COMM_Pin LED_ERROR_Pin */
+  GPIO_InitStruct.Pin = LED_RUN_Pin|LED_COMM_Pin|LED_ERROR_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : MAG_INT_Pin */
+  GPIO_InitStruct.Pin = MAG_INT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(MAG_INT_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
