@@ -127,3 +127,19 @@ COM-Port liefern.
 * Am PC erscheint der Port als „Silicon Labs CP210x USB to UART Bridge (COMx)“ (Treiber von
   Silicon Labs); die COM-Nummer vergibt Windows neu – ggf. im Geräte-Manager auf COM5 umstellen.
 * Jumper JM1 und JM2 müssen gesteckt sein.
+
+## 7. Test auf dem STM32F746G-Discovery (nur Simulation)
+
+Schalter `SDS110_BOARD_DISCO` in `Core/SDS_110/SDS_110_Board.h` auf **1** setzen und neu bauen
+(Kommandozeile: `make -C wsl PREFIX=arm-none-eabi- OPT="-O0 -g3 -DSDS110_BOARD_DISCO=1"`).
+Das Image läuft auf dem Discovery, weil Chip (F746), 25-MHz-Takt, Flash und RAM gleich sind.
+
+* PC-Verbindung: USB-CDC an **CN13 (USB FS)** wie im Projekt SDS_110 (`SDS110_LINK_UART` folgt
+  automatisch auf 0; die Kombination Discovery + UART bricht den Build ab).
+* Nicht initialisiert (Pins auf dem Discovery anders belegt): MX_GPIO_Init (EN_ESP_CTRL PC13 =
+  uSD-Erkennung, EN_ADA, LEDs PG2..4, MAG_INT), QUADSPI (PA1 = ETH-Takt), I2C2, USART1
+  (PA10 = OTG_FS_ID), USART3 (PD8/PD9 = SDRAM-Daten); SAI ohnehin aus.
+* LED1 (PI1, grün): Herzschlag 1 Hz, dauerhaft an bei fatalem Fehler. LCD bleibt dunkel.
+* Flashen mit dem ST-LINK des Discovery; die CubeIDE-Debugkonfiguration nennt STM32F746ZGTx –
+  derselbe Chip, eine Gehäuse-Warnung kann übergangen werden.
+* Für das eigene Board den Schalter wieder auf 0 setzen.
