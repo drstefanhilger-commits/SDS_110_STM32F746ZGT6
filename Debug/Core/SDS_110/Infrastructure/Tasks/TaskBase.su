@@ -1,0 +1,9 @@
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/DWT.hpp:19:22:static sds110::DWTTimer& sds110::DWTTimer::instance()	8	static,ignoring_inline_asm
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/DWT.hpp:21:14:uint32_t sds110::DWTTimer::cycles() const	16	static
+C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/DWT.hpp:33:5:sds110::DWTTimer::DWTTimer()	24	static,ignoring_inline_asm
+../Core/SDS_110/Infrastructure/Tasks/TaskBase.hpp:28:18:virtual void sds110::TaskBase::waitForWork()	16	static
+../Core/SDS_110/Infrastructure/Tasks/TaskBase.hpp:29:18:virtual void sds110::TaskBase::onStart()	16	static
+../Core/SDS_110/Infrastructure/Tasks/TaskBase.hpp:30:18:virtual void sds110::TaskBase::onExit()	16	static
+../Core/SDS_110/Infrastructure/Tasks/TaskBase.cpp:10:1:sds110::TaskBase::TaskBase(uint32_t, uint32_t, osPriority_t)	24	static
+../Core/SDS_110/Infrastructure/Tasks/TaskBase.cpp:13:6:bool sds110::TaskBase::start()	56	static
+../Core/SDS_110/Infrastructure/Tasks/TaskBase.cpp:25:6:static void sds110::TaskBase::threadEntry(void*)	32	static

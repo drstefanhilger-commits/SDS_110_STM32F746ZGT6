@@ -1,0 +1,5 @@
+../Core/SDS_110/Infrastructure/Utils/TimeBase.hpp:21:14:sds110::CycleExtender::CycleExtender(uint32_t)	1
+../Core/SDS_110/Infrastructure/Utils/TimeBase.hpp:25:14:uint64_t sds110::CycleExtender::update(uint32_t, uint32_t)	3
+../Core/SDS_110/Infrastructure/Utils/DWT.hpp:19:22:static sds110::DWTTimer& sds110::DWTTimer::instance()	3
+../Core/SDS_110/Infrastructure/Utils/DWT.hpp:33:5:sds110::DWTTimer::DWTTimer()	2
+../Core/SDS_110/Infrastructure/Utils/TimeBase.cpp:9:10:static uint64_t sds110::TimeBase::nowUs()	3

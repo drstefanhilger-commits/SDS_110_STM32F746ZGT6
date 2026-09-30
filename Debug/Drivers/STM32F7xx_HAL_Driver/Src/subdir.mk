@@ -32,34 +32,6 @@ C_SRCS += \
 ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.c \
 ../Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.c 
 
-OBJS += \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma_ex.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_exti.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash_ex.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_qspi.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc_ex.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sai.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sai_ex.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.o \
-./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.o 
-
 C_DEPS += \
 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.d \
 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.d \
@@ -88,10 +60,38 @@ C_DEPS += \
 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.d \
 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.d 
 
+OBJS += \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma_ex.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_exti.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_flash_ex.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_qspi.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc_ex.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sai.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sai_ex.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.o \
+./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.o 
+
 
 # Each subdirectory must supply rules for building sources it contributes
 Drivers/STM32F7xx_HAL_Driver/Src/%.o Drivers/STM32F7xx_HAL_Driver/Src/%.su Drivers/STM32F7xx_HAL_Driver/Src/%.cyclo: ../Drivers/STM32F7xx_HAL_Driver/Src/%.c Drivers/STM32F7xx_HAL_Driver/Src/subdir.mk
-	arm-none-eabi-gcc "$<" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F746xx -c -I../Core/Inc -I../Drivers/STM32F7xx_HAL_Driver/Inc -I../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1 -I../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/ST/ARM/DSP/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F746xx -c -I../Core/Inc -I../Drivers/STM32F7xx_HAL_Driver/Inc -I../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1 -I../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/ST/ARM/DSP/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Data_Interface_140" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Harness" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Driver" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Model" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Tasks" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Timer" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Processing_Module_120" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Processing_Module_120/Correlation_Processing_Module_126" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Processing_Module_120/Feature_Extraction_Module_122" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Processing_Module_120/Localisation_Module_128" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Processing_Module_120/Machine_Learning_Module_124" -I"C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Processing_Module_120/Output_Interface_130" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 
 clean: clean-Drivers-2f-STM32F7xx_HAL_Driver-2f-Src
 

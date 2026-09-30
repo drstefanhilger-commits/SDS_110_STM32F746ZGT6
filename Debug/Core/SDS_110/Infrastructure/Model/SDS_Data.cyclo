@@ -1,0 +1,20 @@
+../Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:166:10:bool SDS_Data::lock(uint32_t) const	1
+../Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:167:10:void SDS_Data::unlock() const	1
+../Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:168:10:bool SDS_Data::lockRead() const	2
+../Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:169:10:bool SDS_Data::lockWrite()	4
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:6:11:static SDS_Data& SDS_Data::instance()	3
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:12:1:SDS_Data::SDS_Data()	1
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:26:6:void SDS_Data::setAcousticState(const sds110::AcousticState&)	4
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:38:6:void SDS_Data::getAcousticState(sds110::AcousticState&) const	2
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:45:6:void SDS_Data::setCandidate(float, float, float, bool)	3
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:58:6:void SDS_Data::setTaskStats(TaskId, uint32_t, float, uint32_t)	2
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:66:11:TaskStats SDS_Data::getTaskStats(TaskId) const	2
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:74:6:void SDS_Data::setDebugValue(uint32_t, float)	2
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:80:7:float SDS_Data::getDebugValue(uint32_t) const	2
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:86:6:void SDS_Data::pushErrorMessage(const char*)	1
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:93:6:bool SDS_Data::popErrorMessage(SDS_ErrorMessage&)	1
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:98:6:void SDS_Data::setErrorBuffer(const uint8_t*, uint32_t)	3
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:107:10:uint32_t SDS_Data::getErrorBuffer(uint8_t*, uint32_t) const	3
+../Core/SDS_110/Infrastructure/Model/SDS_Data.cpp:117:6:void SDS_Data::pushEvent(SDS_DataEventType, float)	1
+../Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:184:28:T SDS_Data::getValue(const T&) const [with T = float]	2
+../Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:171:31:void SDS_Data::setValue(T&, const T&) [with T = float]	2

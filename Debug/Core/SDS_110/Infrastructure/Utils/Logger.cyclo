@@ -1,0 +1,8 @@
+C:\ST\STM32CubeIDE_2.1.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740\tools\bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/bits/atomic_base.h:109:3:constexpr std::memory_order std::operator&(memory_order, __memory_order_modifier)	1
+C:\ST\STM32CubeIDE_2.1.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740\tools\bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/atomic:907:17:constexpr std::atomic<long unsigned int>::atomic(__integral_type)	1
+../Core/SDS_110/Infrastructure/Utils/Logger.cpp:11:9:static Logger& Logger::instance()	3
+../Core/SDS_110/Infrastructure/Utils/Logger.cpp:17:1:Logger::Logger()	1
+../Core/SDS_110/Infrastructure/Utils/Logger.cpp:23:6:)	18
+../Core/SDS_110/Infrastructure/Utils/Logger.cpp:51:5:int Logger::read(uint8_t*, int)	18
+C:\ST\STM32CubeIDE_2.1.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740\tools\bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/bits/atomic_base.h:358:17:constexpr std::__atomic_base<_IntTp>::__atomic_base(__int_type) [with _ITp = long unsigned int]	1
+C:\ST\STM32CubeIDE_2.1.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740\tools\bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/bits/atomic_base.h:367:7:std::__atomic_base<_IntTp>::__int_type std::__atomic_base<_IntTp>::operator=(__int_type) [with _ITp = long unsigned int]	7
