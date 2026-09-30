@@ -19,7 +19,12 @@ public:
     bool init(SAI_HandleTypeDef* hsai, I2C_HandleTypeDef* hi2c)
     {
         pre_.init();
+#if SDS110_SAI_ENABLED
         return sampling_.init(hsai, hi2c);
+#else
+        (void)hsai; (void)hi2c;                        // SAI-Hardwarefehler: 116 bleibt aus, nur Simulator
+        return true;
+#endif
     }
     bool start() { return sampling_.start(); }
 

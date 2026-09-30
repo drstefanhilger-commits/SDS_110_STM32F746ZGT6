@@ -91,3 +91,17 @@ Discovery-Stand (m_overview, m_bearing_drone, m_selection, m_confidence): Abweic
    Firmware zu klein und nicht angepasst.
 6. Nicht genutzt: QSPI-Flash, RTC-Zeit, USART1/USART3 (ESP32-C3), Magnetometer (MAG_INT),
    TIM1…TIM10 außer TIM7 (LoggerTask).
+
+## 5. Betrieb nur mit Simulator (SAI-Hardwarefehler, 30.09.2026)
+
+Schalter `SDS110_SAI_ENABLED` in `Core/SDS_110/SDS_110_Board.h`, Standard **0**:
+
+* `MX_SAI1_Init()` kehrt sofort zurück (`USER CODE BEGIN SAI1_Init 0` in `main.c`, übersteht
+  CubeMX-Neugenerierung); `HAL_SAI_MspInit` läuft nie, SAI1-IRQ und DMA bleiben ungenutzt.
+* 116 (`Sampling_Circuitry_116::init`) wird nicht aufgerufen: kein I2C-Zugriff auf den ADAU7118,
+  EN_ADA bleibt low.
+* Der ProcessingTask läuft immer mit dem Signal-Simulator (Standard: Szenario DroneSweep).
+  USB-Kommando Typ 3 wählt weiter das Szenario (z. B. DroneStatic, FlyBy); Typ 3 = 0 (Mikrofone)
+  wird ignoriert und einmal als Fehlermeldung „SAI aus: nur Simulation“ gemeldet.
+
+Nach der Reparatur `SDS110_SAI_ENABLED` auf 1 setzen.

@@ -10,6 +10,7 @@
  * und externes SDRAM (SDRAMDriver, Selbsttest): alle Puffer liegen im internen SRAM.
  */
 #pragma once
+#include "SDS_110_Board.h"             // SDS110_SAI_ENABLED (auch für main.c)
 
 // Nur für main.c (C): Header-only-Treiber mit nicht-inline Definitionen.
 // Aus C++-Dateien NICHT einziehen, sonst doppelte Definition beim Linken.

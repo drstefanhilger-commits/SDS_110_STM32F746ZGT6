@@ -59,6 +59,16 @@ void ProcessingTask::updateSource()
     // (SimScenario.hpp). Sperr-Timeout: letzten Wert behalten, nicht auf Hardware umschalten (Befund 29)
     uint32_t simCmd = simCmd_;
     if (dm_.tryGetSimulation(simCmd)) simCmd_ = simCmd;
+#if !SDS110_SAI_ENABLED
+    // SAI-Hardwarefehler (SDS_110_Board.h): kein Mikrofonpfad, "Mikrofone" (Typ 3 = 0) ignorieren
+    if (simCmd_ == SIM_CMD_OFF) {
+        if (!simOffIgnored_) dm_.pushErrorMessage("SAI aus: nur Simulation");
+        simOffIgnored_ = true;
+        simCmd_ = simInitCmd_ != SIM_CMD_OFF ? simInitCmd_ : SIM_CMD_DEFAULT;
+    } else {
+        simOffIgnored_ = false;
+    }
+#endif
     simOn_ = simCmd_ != SIM_CMD_OFF;
     if (simOn_ && simCmd_ != simInitCmd_) initSimulator(simCmd_);   // anderes Szenario: neu beginnen
     if (simOn_ && !simRunning_) {
