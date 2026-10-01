@@ -584,7 +584,11 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     /* USER CODE BEGIN USART1_MspInit 1 */
-
+    /* RX (PA10) mit Pull-up: ohne angeschlossenen Adapter (Jumper JM1/JM2 offen, nichts an PH1)
+       floatet der Eingang sonst und erzeugt Rahmenfehler; Ruhepegel einer UART ist High. */
+    GPIO_InitStruct.Pin = GPIO_PIN_10;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
     /* USER CODE END USART1_MspInit 1 */
   }
   else if(huart->Instance==USART3)
