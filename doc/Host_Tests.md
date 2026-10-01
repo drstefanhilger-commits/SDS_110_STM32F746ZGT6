@@ -32,6 +32,7 @@ Peilwerte unten sind mit 200 mm neu gemessen, die Werte für 400 mm stehen in Kl
 | Prüfung | `t_sound_speed` | 34 | Schallgeschwindigkeit aus der Lufttemperatur (Sync Typ 7), Peilung −40…+60 °C |
 | Prüfung | `t_feedback` | 34 | Feedback der Tracking-Einheit (USB Id 8): Kodierung, Ablauf nach 2 s, Wirkung in 126 |
 | Prüfung | `t_usb_commands` | 32 | Kommandos aus dem USB-Bytestrom: mehrere je Paket, geteilt, Resync, veralteter Rest |
+| Prüfung | `t_uart_selftest` | – | Selbsttest USART1 (`SDS110_UART_SELFTEST`): Logger Id 99, ECHO mit CRC-Prüfung, geteilte/zusammengefasste Kommandos, Müll, Herzschlag |
 | Prüfung | `t_local_position` | – | Standort lokal Ost/Nord/Oben (USB Id 10, Nachricht Id 6): Grundwert Ursprung, Kodierung, Grenzen, Zurücksetzen |
 | Prüfung | `t_sds_data` | 29 | Sperr-Timeouts in `SDS_Data`: Getter liefern den Wert statt 0, tryGet false, Setter mit zweitem Versuch |
 | Prüfung | `t_bearing_f0` | 26 | Mehrdeutigkeit bei hohem f0: f0 = 180/480/1000 Hz, ≤ 1 % grobe Fehler, 95 % ≤ 10° |

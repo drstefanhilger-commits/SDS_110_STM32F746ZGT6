@@ -160,7 +160,9 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-
+#if SDS110_UART_SELFTEST
+  SDS110_UartSelfTest();        // Selbsttest USART1/CP2102N, kehrt nicht zurück (SDS_110_Board.h)
+#endif
   /* USER CODE END 2 */
 
   /* Init scheduler */

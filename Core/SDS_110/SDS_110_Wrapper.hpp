@@ -27,6 +27,7 @@ void SDS110_Init(void);                  // Sensor Unit 112 + Processing Module 
 void SDS110_StartProcessingTask(void);   // Task um Processing_Module_120
 void SDS110_StartUSBTask(void);
 void SDS110_StartLoggerTask(void);       // Logger (USB Id 99) + Status-LEDs
+void SDS110_UartSelfTest(void);          // nur SDS110_UART_SELFTEST: kehrt nicht zurück
 
 #ifdef __cplusplus
 }

@@ -51,4 +51,17 @@
 #define SDS110_UART_BAUD 921600U
 #endif
 
+/* Selbsttest der PC-Verbindung USART1/CP2102N (nur Inbetriebnahme, ohne RTOS und SDS-Module).
+ * 1 = main.c ruft nach der Peripherie-Initialisierung SDS110_UartSelfTest() auf und kehrt nicht
+ *     zurück (Infrastructure/Driver/UartSelfTest.cpp): Herzschlag als Logger-Nachricht Id 99 jede
+ *     Sekunde, jedes Kommando wird mit "ECHO id=.. len=.. crc=OK|BAD" beantwortet. Am PC:
+ *     python test/pc/uart_link_test.py --port COMx
+ * 0 = normaler Betrieb. */
+#ifndef SDS110_UART_SELFTEST
+#define SDS110_UART_SELFTEST 0
+#endif
+#if SDS110_UART_SELFTEST && !SDS110_LINK_UART
+#error "SDS110_UART_SELFTEST braucht SDS110_LINK_UART 1 (eigenes Board, USART1)"
+#endif
+
 #endif /* SDS_110_BOARD_H */
