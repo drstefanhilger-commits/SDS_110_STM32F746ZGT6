@@ -1,1 +1,9 @@
 build/
+
+# Build-Ausgabe der STM32CubeIDE (wird bei jedem Build neu erzeugt)
+Debug/
+Release/
+
+# Python-Zwischendateien
+__pycache__/
+*.pyc
