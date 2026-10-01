@@ -171,9 +171,10 @@ Firmware STM32 (Schalter in `SDS_110_Board.h`):
 Firmware ESP32-C3: `tools/esp32c3_bridge` (ESP-IDF, C++), transparente Brücke UART0 ↔ TCP,
 Access Point `SDS110-xxxx` (192.168.4.1) oder Anmeldung im vorhandenen WLAN, UDP-Ankündigung auf
 Port 3334, Update per WLAN (OTA, Port 3335). Prüfwerkzeug am PC: `tools/esp32c3_bridge/sds_link_test.py`.
-Das erste Flashen des ESP32-C3 braucht einen 3,3-V-USB-UART-Adapter an den Netzen `ESP_UART_TX`/
-`ESP_UART_RX`, während der STM32 im Reset gehalten wird: IO18/IO19 (USB) des Moduls sind nicht
-beschaltet (README der Brücke).
+Das erste Flashen des ESP32-C3 geht nur mit dem ST-LINK: Die Flasher-Firmware
+`tools/esp32c3_flasher` ersetzt vorübergehend die SDS-Firmware, enthält die ESP-Images und schreibt
+sie über USART3 (ROM-Bootloader, SW3 halten). IO18/IO19 (USB) des Moduls sind nicht beschaltet.
+Alternativ ein 3,3-V-USB-UART-Adapter bei gehaltenem STM32-Reset (README der Brücke).
 
 Grenzen: Die UTC aus Sync (Id 7) wird über WLAN ungenauer als über USB (Laufzeitschwankung einige
 ms, Traceability_FSL9 Punkt 3); Kommandos haben noch keine CRC-Prüfung (Befund 12), daher das WLAN

@@ -47,27 +47,30 @@ Alternativ PlatformIO: `pio run` (gleiche Quellen, `platformio.ini`).
 ## Erstes Flashen (ohne USB)
 
 Die USB-Pins IO18/IO19 des Moduls sind auf dem Board nicht beschaltet, und UART0 hängt am
-STM32. Für das erste Flashen braucht man deshalb einen **USB-UART-Adapter mit 3,3-V-Pegel**
-(z. B. CP2102 oder FT232 auf 3,3 V). Danach geht jedes Update per WLAN.
+STM32. Es gibt zwei Wege:
+
+**A – nur mit dem ST-LINK (empfohlen):** Die Flasher-Firmware `tools/esp32c3_flasher` für den
+STM32 enthält die Images und schreibt sie über USART3 in den ESP. Bauen und Ablauf stehen in
+`tools/esp32c3_flasher/README.md`.
+
+**B – mit einem USB-UART-Adapter (3,3 V)**, z. B. CP2102 oder FT232:
 
 1. **STM32 im Reset halten**, damit PD8/PD9 hochohmig sind. Das geht z. B. so:
    - in STM32CubeProgrammer mit „Hardware reset“ verbinden und den Reset halten,
-   - oder NRST per Taster bzw. Brücke auf GND legen.
+   - oder NRST auf GND legen.
 
-   Prüfen: Der EN-Pin des ESP muss dabei über seinen eigenen Pull-up auf High bleiben (R36
-   10 kΩ laut Schaltplan, bitte nachmessen), weil PC13 im Reset nicht treibt.
-2. Adapter anschließen (Netznamen aus dem Schaltplan):
-   - Adapter **TX** → Netz `ESP_UART_TX` (PD8, Modul-Pin 30 RXD0)
-   - Adapter **RX** → Netz `ESP_UART_RX` (PD9, Modul-Pin 31 TXD0)
+   EN des ESP muss dabei über seinen eigenen Pull-up High bleiben (R36, bitte nachmessen).
+2. Adapter anschließen:
+   - **TX** → Netz `ESP_UART_TX` (PD8, Modul-Pin 30 RXD0)
+   - **RX** → Netz `ESP_UART_RX` (PD9, Modul-Pin 31 TXD0)
    - **GND** → GND
-3. **Download-Modus:** SW3 (BOOT, IO9) gedrückt halten, SW2 (EN) kurz drücken, dann SW3 loslassen.
-   IO8 muss dabei High sein (Strapping-Pin).
-4. Flashen. Der Adapter hat hier kein RTS/DTR am ESP, daher `no_reset`:
+3. SW3 (BOOT) halten, SW2 (EN) kurz drücken, SW3 loslassen. IO8 muss High sein.
+4. Flashen:
    ```bash
    cd build
    python -m esptool --chip esp32c3 -p COMx -b 460800 --before no_reset --after no_reset write_flash "@flash_args"
    ```
-5. Adapter abziehen, Reset am STM32 loslassen. Danach SW2 drücken oder Strom aus und an.
+5. Adapter abziehen, STM32 freigeben, ESP neu starten (SW2).
 
 ## Update per WLAN
 
