@@ -89,8 +89,8 @@ Discovery-Stand (m_overview, m_bearing_drone, m_selection, m_confidence): Abweic
 5. Der Ordner `Debug/` enthält noch die Build-Ausgabe des leeren Skeletons; CubeIDE erzeugt die
    Makefiles beim nächsten Build neu. `STM32F746ZGTX_RAM.ld` (Ausführung aus RAM) ist für diese
    Firmware zu klein und nicht angepasst.
-6. Nicht genutzt: QSPI-Flash, RTC-Zeit, USART1/USART3 (ESP32-C3), Magnetometer (MAG_INT),
-   TIM1…TIM10 außer TIM7 (LoggerTask).
+6. Nicht genutzt: QSPI-Flash, RTC-Zeit, Magnetometer (MAG_INT), TIM1…TIM10 außer TIM7
+   (LoggerTask). USART1 (CP2102N) bzw. USART3 (ESP32-C3) trägt die PC-Verbindung (Abschnitte 6, 8).
 
 ## 5. Betrieb nur mit Simulator (SAI-Hardwarefehler, 30.09.2026)
 
@@ -143,3 +143,39 @@ Das Image läuft auf dem Discovery, weil Chip (F746), 25-MHz-Takt, Flash und RAM
 * Flashen mit dem ST-LINK des Discovery; die CubeIDE-Debugkonfiguration nennt STM32F746ZGTx –
   derselbe Chip, eine Gehäuse-Warnung kann übergangen werden.
 * Für das eigene Board den Schalter wieder auf 0 setzen.
+
+## 8. PC-Verbindung über WLAN mit dem ESP32-C3 (01.10.2026)
+
+Der ESP32-C3-MINI-1-N4 (Schaltplan Seite „ESP32-C3 Wi-Fi Module“) hängt an **USART3**: PD8 TX →
+RXD0 (Modul-Pin 30, GPIO20), PD9 RX ← TXD0 (Modul-Pin 31, GPIO21). EN kommt über R40 (1 kΩ) von
+**PC13 EN_ESP_CTRL** (High in `MX_GPIO_Init`) und vom Taster SW2, BOOT (IO9) vom Taster SW3.
+
+```
+STM32F746 USART3 ──1 Mbaud 8N1──► ESP32-C3 ──WLAN, TCP 3333──► PC-Monitor (socket://<ip>:3333)
+```
+
+Firmware STM32 (Schalter in `SDS_110_Board.h`):
+
+* `SDS110_PC_UART` **3** (Standard, weil USB auf dem Board nicht funktioniert) wählt USART3,
+  1 den bisherigen Weg über USART1/CP2102N. `USBDriver` nutzt dann `huart3` und
+  `USART3_IRQHandler` (Priorität 5); in CubeMX den USART3-IRQ **nicht** aktivieren.
+  CP2102N wieder nutzen: `make -C wsl PREFIX=arm-none-eabi- OPT="-O0 -g3 -DSDS110_PC_UART=1"`.
+* Baudrate `SDS110_ESP_UART_BAUD` = **1 000 000** (setzt `startLink`, `.ioc`/`main.c` bleiben bei
+  115200). Beide Takte teilen ohne Rest (USART3 54 MHz, ESP32-C3 80 MHz). Spitzenlast in DETECT
+  etwa 17 kB/s, die UART schafft etwa 100 kB/s; READ-Streaming passt wie beim CP2102N nicht.
+* `SDS110_ESP_BOOT_MS` = 1500: Empfang von USART3 in den ersten 1,5 s nach dem Reset verwerfen.
+  Das ROM des ESP32-C3 gibt beim Booten Text mit 115200 Baud auf UART0 aus, der sonst als
+  fehlerhaftes Kommando am LCD erschiene. Ein Reset nur des ESP (SW2) bei laufendem STM32 erzeugt
+  diesen Text weiterhin (einmal Fehler-Flag); abschalten lässt er sich per eFuse (README der Brücke).
+
+Firmware ESP32-C3: `tools/esp32c3_bridge` (ESP-IDF, C++), transparente Brücke UART0 ↔ TCP,
+Access Point `SDS110-xxxx` (192.168.4.1) oder Anmeldung im vorhandenen WLAN, UDP-Ankündigung auf
+Port 3334, Update per WLAN (OTA, Port 3335). Prüfwerkzeug am PC: `tools/esp32c3_bridge/sds_link_test.py`.
+Das erste Flashen des ESP32-C3 geht nur mit dem ST-LINK: Die Flasher-Firmware
+`tools/esp32c3_flasher` ersetzt vorübergehend die SDS-Firmware, enthält die ESP-Images und schreibt
+sie über USART3 (ROM-Bootloader, SW3 halten). IO18/IO19 (USB) des Moduls sind nicht beschaltet.
+Alternativ ein 3,3-V-USB-UART-Adapter bei gehaltenem STM32-Reset (README der Brücke).
+
+Grenzen: Die UTC aus Sync (Id 7) wird über WLAN ungenauer als über USB (Laufzeitschwankung einige
+ms, Traceability_FSL9 Punkt 3); Kommandos haben noch keine CRC-Prüfung (Befund 12), daher das WLAN
+mit WPA2 betreiben.

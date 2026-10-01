@@ -13,20 +13,38 @@
 extern "C" USBD_HandleTypeDef hUsbDeviceFS;
 
 #if SDS110_LINK_UART
-// ---------------------------------------------------------------- Transport USART1 (CP2102N)
-// STM32F746ZGT6-Board: der PC hängt über den CP2102N an USART1 (SDS_110_Board.h). Senden per
-// Interrupt aus txBuf_ (HAL_UART_Transmit_IT), Empfang blockweise bis Leerlauf
-// (HAL_UARTEx_ReceiveToIdle_IT) -> USBTask_OnReceive wie bei CDC_Receive_FS.
-// USART1-IRQ Priorität 5 (= configMAX_SYSCALL_INTERRUPT_PRIORITY): kick() läuft im ISR oder im
+// ---------------------------------------------------------------- Transport UART
+// STM32F746ZGT6-Board: der PC hängt an USART1 (CP2102N, Kabel) oder an USART3 (ESP32-C3, WLAN),
+// Auswahl mit SDS110_PC_UART (SDS_110_Board.h). Senden per Interrupt aus txBuf_
+// (HAL_UART_Transmit_IT), Empfang blockweise bis Leerlauf (HAL_UARTEx_ReceiveToIdle_IT)
+// -> USBTask_OnReceive wie bei CDC_Receive_FS.
+// UART-IRQ Priorität 5 (= configMAX_SYSCALL_INTERRUPT_PRIORITY): kick() läuft im ISR oder im
 // kritischen Abschnitt, der ihn maskiert. Der IRQ ist in CubeMX NICHT aktiviert (Handler hier).
+#if SDS110_PC_UART == 3
+extern "C" UART_HandleTypeDef huart3;
+#define SDS110_PC_UART_IRQHandler USART3_IRQHandler
+#else
 extern "C" UART_HandleTypeDef huart1;
+#define SDS110_PC_UART_IRQHandler USART1_IRQHandler
+#endif
 extern "C" void USBTask_OnReceive(uint8_t* buf, uint32_t len);
 extern "C" volatile uint32_t usb_debug_counter;
 
 namespace {
+#if SDS110_PC_UART == 3
+UART_HandleTypeDef* const s_uart = &huart3;
+constexpr IRQn_Type s_uartIrq    = USART3_IRQn;
+constexpr uint32_t s_uartBaud    = SDS110_ESP_UART_BAUD;
+constexpr uint32_t s_rxQuietMs   = SDS110_ESP_BOOT_MS;      // Boot-Meldungen des ESP32-C3 verwerfen
+#else
+UART_HandleTypeDef* const s_uart = &huart1;
+constexpr IRQn_Type s_uartIrq    = USART1_IRQn;
+constexpr uint32_t s_uartBaud    = SDS110_UART_BAUD;
+constexpr uint32_t s_rxQuietMs   = 0;
+#endif
 volatile bool s_uartTxBusy = false;
 uint8_t s_uartRx[64];                              // ein Block wie ein USB-FS-Paket (USBTask::MAX_LENGTH)
-void uartStartRx() { (void)HAL_UARTEx_ReceiveToIdle_IT(&huart1, s_uartRx, sizeof(s_uartRx)); }
+void uartStartRx() { (void)HAL_UARTEx_ReceiveToIdle_IT(s_uart, s_uartRx, sizeof(s_uartRx)); }
 }
 #endif
 
@@ -46,18 +64,18 @@ volatile uint32_t USBDriver::txDropped_ = 0;
 #if SDS110_LINK_UART
 void USBDriver::startLink()
 {
-    if (huart1.Init.BaudRate != SDS110_UART_BAUD) {   // CubeMX-Wert abweichend: Baudrate hier setzen
-        huart1.Init.BaudRate = SDS110_UART_BAUD;
-        (void)HAL_UART_Init(&huart1);
+    if (s_uart->Init.BaudRate != s_uartBaud) {        // CubeMX-Wert abweichend: Baudrate hier setzen
+        s_uart->Init.BaudRate = s_uartBaud;
+        (void)HAL_UART_Init(s_uart);
     }
-    HAL_NVIC_SetPriority(USART1_IRQn, 5, 0);
-    HAL_NVIC_EnableIRQ(USART1_IRQn);
+    HAL_NVIC_SetPriority(s_uartIrq, 5, 0);
+    HAL_NVIC_EnableIRQ(s_uartIrq);
     uartStartRx();
 }
 
 bool USBDriver::linkReady()
 {
-    return huart1.gState != HAL_UART_STATE_RESET;     // UART ohne Verbindungszustand: immer senden
+    return s_uart->gState != HAL_UART_STATE_RESET;    // UART ohne Verbindungszustand: immer senden
 }
 #else
 void USBDriver::startLink() {}
@@ -106,7 +124,7 @@ void USBDriver::kick()
 
 #if SDS110_LINK_UART
     s_uartTxBusy = true;
-    if (HAL_UART_Transmit_IT(&huart1, txBuf_, static_cast<uint16_t>(n)) != HAL_OK) s_uartTxBusy = false;
+    if (HAL_UART_Transmit_IT(s_uart, txBuf_, static_cast<uint16_t>(n)) != HAL_OK) s_uartTxBusy = false;
 #else
     USBD_CDC_SetTxBuffer(&hUsbDeviceFS, txBuf_, n);
     USBD_CDC_TransmitPacket(&hUsbDeviceFS);
@@ -218,25 +236,25 @@ extern "C" void USBDriver_OnTransmitComplete(void)
 }
 
 #if SDS110_LINK_UART
-// ---------------------------------------------------------------- HAL-Hooks USART1
+// ---------------------------------------------------------------- HAL-Hooks USART1 bzw. USART3
 extern "C" {
 
-void USART1_IRQHandler(void)
+void SDS110_PC_UART_IRQHandler(void)
 {
-    HAL_UART_IRQHandler(&huart1);
+    HAL_UART_IRQHandler(s_uart);
 }
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart)
 {
-    if (huart != &huart1) return;
+    if (huart != s_uart) return;
     s_uartTxBusy = false;
     sds110::USBDriver::onTransmitComplete();
 }
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t size)
 {
-    if (huart != &huart1) return;
-    if (size > 0) {
+    if (huart != s_uart) return;
+    if (size > 0 && HAL_GetTick() >= s_rxQuietMs) {  // Laufzeit seit Reset (HAL-Tick, TIM6)
         ++usb_debug_counter;                           // LED_COMM (LoggerTask)
         USBTask_OnReceive(s_uartRx, size);
     }
@@ -245,7 +263,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t size)
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
 {
-    if (huart != &huart1) return;
+    if (huart != s_uart) return;
     // Überlauf/Rahmenfehler: Empfang neu starten; ein abgebrochener Sendeblock ist verloren
     if (huart->gState == HAL_UART_STATE_READY) s_uartTxBusy = false;
     uartStartRx();
