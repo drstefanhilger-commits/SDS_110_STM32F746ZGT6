@@ -126,7 +126,42 @@ COM-Port liefern.
   (1,6 MB/s) passt nicht über die UART; DETECT/CALIBRATE (Reports, Logger) schon.
 * Am PC erscheint der Port als „Silicon Labs CP210x USB to UART Bridge (COMx)“ (Treiber von
   Silicon Labs); die COM-Nummer vergibt Windows neu – ggf. im Geräte-Manager auf COM5 umstellen.
-* Jumper JM1 und JM2 müssen gesteckt sein.
+* Jumper JM1 und JM2 müssen gesteckt sein (nur bei Weg A, siehe unten).
+* PA10 (RX) hat einen internen Pull-up (`HAL_UART_MspInit`, USER CODE `USART1_MspInit 1`): ohne
+  angeschlossene Gegenstelle floatet der Eingang sonst und erzeugt Rahmenfehler (01.10.2026).
+
+### Zwei Wege zum PC (01.10.2026)
+
+| Weg | PC-Port | Jumper JM1/JM2 |
+| --- | --- | --- |
+| A: CP2102N auf dem Board, USB-C #2 | „Silicon Labs CP210x USB to UART Bridge“ | **gesteckt** |
+| B: externer USB-UART-Adapter an **PH1** | z. B. „USB Serial Port“ (FTDI) | **gezogen** |
+
+**Stand 01.10.2026: Der USB-/CP2102N-Teil des Boards ist defekt, verwendet wird Weg B.** Bei Weg B
+die Jumper unbedingt ziehen: sonst hängt der CP2102N parallel an PA9/PA10, und CP2102N-TXD und
+Adapter-TXD treiben beide PA10.
+
+Anschluss eines FTDI-Kabels **TTL-232R-3V3** an PH1 (TX/RX gekreuzt, 3,3-V-Pegel):
+
+| Ader | Signal Kabel | PH1 |
+| --- | --- | --- |
+| schwarz | GND | Pin 1 (GND) |
+| gelb | RXD (Eingang) | Pin 3 (USART1_TX, PA9) |
+| orange | TXD (Ausgang) | Pin 4 (USART1_RX, PA10) |
+| rot | **VCC = 5 V** | **nicht anschließen** |
+| braun, grün | CTS#, RTS# | nicht anschließen |
+
+**Achtung:** „3V3“ im Kabelnamen gilt nur für die Signalpegel – die rote Ader führt 5 V aus USB und
+darf nie an PH1 Pin 2 (3V3) oder einen anderen Pin des Boards. Keine 5-V-Adapter und keine
+RS-232-Kabel (±12 V, DB9) verwenden.
+
+Prüfung des Kabels allein: Kabel vom Board abziehen, **orange mit gelb** verbinden, dann
+
+```
+py -c "import serial,time; s=serial.Serial('COM7',115200,timeout=0.5); s.write(b'SDS-LOOP-123'); time.sleep(0.1); print(s.read(64))"
+```
+
+Erwartet: `b'SDS-LOOP-123'`. Bei `b''` ist die RXD-Ader (gelb) oder das Kabel defekt.
 
 ### Test der Verbindung (01.10.2026)
 
@@ -160,9 +195,11 @@ verteilt (5 ms Pause), zwei Kommandos in einem Schreibvorgang. Geprüft werden a
 
 | Befund des Skripts | wahrscheinliche Ursache |
 | --- | --- |
-| „nichts empfangen“ | falscher Port, Jumper JM1/JM2 offen, Firmware nicht geflasht, Board ohne Versorgung |
+| „nichts empfangen“ | falscher Port; Weg A: Jumper JM1/JM2 offen; Weg B: Adapter-RXD nicht an PH1 Pin 3 oder Kabel defekt (Kabel-Rückschleife); Firmware nicht geflasht |
+| nichts empfangen, aber LED_COMM wechselt beim Senden | Richtung PC → Board geht, Rückweg PA9 → PC unterbrochen: PH1 Pin 3 gegen Pin 1 messen (≈ 3,3 V = PA9 in Ordnung), dann Adapter/Kabel prüfen |
 | nur Müll, keine gültigen Nachrichten | Baudrate falsch (PC und `SDS110_UART_BAUD` vergleichen, Startmeldung `ist=`) |
-| Senden geht, Rundlauf scheitert | RX-Pfad PA10 ← CP2102N-TXD (Jumper JM1/JM2), TX/RX vertauscht |
+| Senden geht, Rundlauf scheitert | RX-Pfad PA10 unterbrochen (Weg A: Jumper JM1; Weg B: Adapter-TXD an PH1 Pin 4) |
+| LED_ERROR an | mindestens ein Empfangsfehler seit dem Reset (bleibt bis zum Reset an); eine einzelne Störung beim Stecken ist harmlos, `ore`/`fe` im Herzschlag nennen die Anzahl |
 | `ore` > 0 | Board liest zu langsam (Überlauf) |
 
 ## 7. Test auf dem STM32F746G-Discovery (nur Simulation)

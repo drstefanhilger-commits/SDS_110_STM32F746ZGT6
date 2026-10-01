@@ -28,8 +28,10 @@
 
 /* Verbindung zum PC-Monitor.
  * 1 = USART1 (PA9 TX, PA10 RX) über den CP2102N-USB-UART-Wandler an USB-C #2 „DATA/USBDEVICE“
- *     (Schaltplan Seite 7/8; Jumper JM1/JM2 stecken). Der USB-OTG-FS-Port des STM32 (PA11/PA12)
- *     ist auf diesem Board nicht beschaltet – USB-CDC kann keinen COM-Port liefern.
+ *     (Schaltplan Seite 7/8; Jumper JM1/JM2 stecken) – oder, bei defektem USB-Teil, ein externer
+ *     3,3-V-USB-UART-Adapter an PH1 (Pin 3 TX, Pin 4 RX, Jumper gezogen; doc/Portierung §6).
+ *     Der USB-OTG-FS-Port des STM32 (PA11/PA12) ist auf diesem Board nicht beschaltet – USB-CDC
+ *     kann keinen COM-Port liefern.
  * 0 = USB-CDC (OTG FS) wie auf dem Discovery-Board.
  * Standard: 1 auf dem eigenen Board, 0 auf dem Discovery (dort liegt USART1-RX an PB7). */
 #ifndef SDS110_LINK_UART
