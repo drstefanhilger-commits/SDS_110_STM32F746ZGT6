@@ -2,20 +2,26 @@ C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6
 C:\ST\STM32CubeIDE_2.1.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740\tools\bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/include/c++/14.3.1/cmath:307:3:constexpr float std::ldexp(float, int)	1
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Sensor_Unit_112/Microphone_Array_114.hpp:56:11:float sds110::MicFrame::sample(uint32_t, uint32_t) const	1
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/crc32.hpp:13:21:static uint32_t sds110::CRC32::computeCRC32(const uint8_t*, size_t)	3
-../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:28:6:static bool sds110::USBDriver::linkReady()	3
-../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:33:6:static bool sds110::USBDriver::enqueue(const uint8_t*, uint32_t)	2
-../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:48:6:static void sds110::USBDriver::kick()	5
-../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:68:6:static void sds110::USBDriver::onTransmitComplete()	1
-../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:73:6:static bool sds110::USBDriver::transmit(const void*, uint32_t, uint32_t)	5
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:29:6:void {anonymous}::uartStartRx()	1
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:47:6:static void sds110::USBDriver::startLink()	2
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:58:6:static bool sds110::USBDriver::linkReady()	1
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:72:6:static bool sds110::USBDriver::enqueue(const uint8_t*, uint32_t)	2
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:87:6:static void sds110::USBDriver::kick()	6
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:116:6:static void sds110::USBDriver::onTransmitComplete()	1
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:121:6:static bool sds110::USBDriver::transmit(const void*, uint32_t, uint32_t)	5
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Model/SDS_Structs.hpp:112:8:SDS_MsgDetect::SDS_MsgDetect()	1
-../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:93:6:static bool sds110::USBDriver::sendDetection(uint32_t, uint32_t, float, float, float, uint32_t)	1
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:141:6:static bool sds110::USBDriver::sendDetection(uint32_t, uint32_t, float, float, float, uint32_t)	1
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Model/SDS_Structs.hpp:125:8:SDS_MsgRead::SDS_MsgRead()	1
-../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:106:6:static bool sds110::USBDriver::sendRead(uint32_t, uint32_t, uint32_t, uint32_t, const sds110::MicFrame*, uint32_t)	5
-../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:127:6:static bool sds110::USBDriver::sendLogging(uint32_t, const uint8_t*, int, uint32_t)	2
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:154:6:static bool sds110::USBDriver::sendRead(uint32_t, uint32_t, uint32_t, uint32_t, const sds110::MicFrame*, uint32_t)	5
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:175:6:static bool sds110::USBDriver::sendLogging(uint32_t, const uint8_t*, int, uint32_t)	2
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Model/SDS_Structs.hpp:146:8:Message::Message()	1
-../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:148:6:static bool sds110::USBDriver::sendMessage(uint32_t, uint32_t, const MessageData&, uint32_t)	1
-../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:158:6:static bool sds110::USBDriver::sendPosition(const sds110::LocalPosition&, uint16_t, uint32_t)	1
-../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:167:17:void USBDriver_OnTransmitComplete()	1
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:196:6:static bool sds110::USBDriver::sendMessage(uint32_t, uint32_t, const MessageData&, uint32_t)	1
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:206:6:static bool sds110::USBDriver::sendPosition(const sds110::LocalPosition&, uint16_t, uint32_t)	1
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:215:17:void USBDriver_OnTransmitComplete()	1
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:224:6:void USART1_IRQHandler()	1
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:229:6:void HAL_UART_TxCpltCallback(UART_HandleTypeDef*)	2
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:236:6:void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef*, uint16_t)	3
+../Core/SDS_110/Infrastructure/Driver/USBDriver.cpp:246:6:void HAL_UART_ErrorCallback(UART_HandleTypeDef*)	3
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/crc32.hpp:26:42:static uint32_t sds110::CRC32::compute_no_crc(const T&) [with T = SDS_MsgDetect]	1
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/crc32.hpp:26:42:static uint32_t sds110::CRC32::compute_no_crc(const T&) [with T = SDS_MsgRead]	1
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/crc32.hpp:26:42:static uint32_t sds110::CRC32::compute_no_crc(const T&) [with T = sds110::USBDriver::sendLogging(uint32_t, const uint8_t*, int, uint32_t)::SDS_MsgLog]	1

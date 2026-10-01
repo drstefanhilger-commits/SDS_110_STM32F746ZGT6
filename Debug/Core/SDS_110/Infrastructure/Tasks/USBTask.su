@@ -49,24 +49,24 @@ C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6
 ../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:18:17:void USBTask_OnReceive(uint8_t*, uint32_t)	16	static
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Utils/CommandAssembler.hpp:23:7:constexpr sds110::CommandAssembler::CommandAssembler()	16	static
 ../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:28:1:sds110::USBTask::USBTask()	16	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:37:6:static void sds110::USBTask::onUsbReceiveISR(const uint8_t*, uint32_t)	112	static,ignoring_inline_asm
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:54:6:virtual void sds110::USBTask::waitForWork()	16	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:67:6:virtual void sds110::USBTask::runOnce()	112	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:81:6:void sds110::USBTask::handleChunk(const RxChunk&)	112	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:97:6:void sds110::USBTask::handle(const uint8_t*)	16	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:114:6:void sds110::USBTask::resetCounters()	40	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:120:6:void sds110::USBTask::handleTimeSync(const uint8_t*)	24	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:127:6:void sds110::USBTask::handleModeChange(const uint8_t*)	24	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:138:6:void sds110::USBTask::handleSimulation(const uint8_t*)	24	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:148:6:void sds110::USBTask::handleSetUnitId(const uint8_t*)	24	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:154:6:void sds110::USBTask::handleSrpReference(const uint8_t*)	24	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:160:6:void sds110::USBTask::handleSync(const uint8_t*)	64	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:176:6:void sds110::USBTask::handleFeedback(const uint8_t*)	296	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:184:6:void sds110::USBTask::handleAzimuthOffset(const uint8_t*)	24	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:192:6:void sds110::USBTask::handlePosition(const uint8_t*)	48	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:200:6:void sds110::USBTask::handleError(const uint8_t*)	16	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:208:6:void sds110::USBTask::handleErrorBytes(const uint8_t*, uint32_t)	40	static
-../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:215:6:static bool sds110::USBTask::hasMagic(const uint8_t*)	16	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:38:6:static void sds110::USBTask::onUsbReceiveISR(const uint8_t*, uint32_t)	112	static,ignoring_inline_asm
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:55:6:virtual void sds110::USBTask::waitForWork()	16	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:68:6:virtual void sds110::USBTask::runOnce()	112	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:82:6:void sds110::USBTask::handleChunk(const RxChunk&)	112	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:98:6:void sds110::USBTask::handle(const uint8_t*)	16	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:115:6:void sds110::USBTask::resetCounters()	40	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:121:6:void sds110::USBTask::handleTimeSync(const uint8_t*)	24	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:128:6:void sds110::USBTask::handleModeChange(const uint8_t*)	24	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:139:6:void sds110::USBTask::handleSimulation(const uint8_t*)	24	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:149:6:void sds110::USBTask::handleSetUnitId(const uint8_t*)	24	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:155:6:void sds110::USBTask::handleSrpReference(const uint8_t*)	24	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:161:6:void sds110::USBTask::handleSync(const uint8_t*)	64	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:177:6:void sds110::USBTask::handleFeedback(const uint8_t*)	296	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:185:6:void sds110::USBTask::handleAzimuthOffset(const uint8_t*)	24	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:193:6:void sds110::USBTask::handlePosition(const uint8_t*)	48	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:201:6:void sds110::USBTask::handleError(const uint8_t*)	16	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:209:6:void sds110::USBTask::handleErrorBytes(const uint8_t*, uint32_t)	40	static
+../Core/SDS_110/Infrastructure/Tasks/USBTask.cpp:216:6:static bool sds110::USBTask::hasMagic(const uint8_t*)	16	static
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:171:31:void SDS_Data::setValue(T&, const T&) [with T = bool]	24	static
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:171:31:void SDS_Data::setValue(T&, const T&) [with T = short unsigned int]	24	static
 C:/Users/310004/Documents/Projects/Sound_Detection/project/SDS_110_STM32F746ZGT6/Core/SDS_110/Infrastructure/Model/SDS_Data.hpp:184:28:T SDS_Data::getValue(const T&) const [with T = short unsigned int]	24	static
