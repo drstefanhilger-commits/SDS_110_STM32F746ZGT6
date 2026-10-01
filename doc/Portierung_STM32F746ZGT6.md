@@ -128,6 +128,43 @@ COM-Port liefern.
   Silicon Labs); die COM-Nummer vergibt Windows neu – ggf. im Geräte-Manager auf COM5 umstellen.
 * Jumper JM1 und JM2 müssen gesteckt sein.
 
+### Test der Verbindung (01.10.2026)
+
+Am PC (Python 3, `pip install pyserial`, PC-Monitor vorher schließen):
+
+```
+python test/pc/uart_link_test.py --list            # Port „CP210x“ suchen
+python test/pc/uart_link_test.py --port COM5
+```
+
+Das Skript erkennt die laufende Firmware selbst:
+
+1. **Selbsttest-Firmware** (`SDS110_UART_SELFTEST 1` in `SDS_110_Board.h`, neu bauen und flashen):
+   läuft ohne RTOS und ohne SDS-Module direkt auf den USART1-Registern
+   (`Infrastructure/Driver/UartSelfTest.cpp`). Sie sendet beim Start
+   `UART-SELFTEST start baud=… ist=… brr=… pclk2=…` (eingestellte und tatsächliche Baudrate), dann
+   jede Sekunde einen Herzschlag mit Zählern (Bytes, Kommandos, CRC-Fehler, Überlauf `ore`,
+   Rahmenfehler `fe`) und beantwortet jedes Kommando mit `ECHO id=.. len=.. crc=OK|BAD c=<crc>`.
+   LED_RUN blinkt 1 Hz, LED_COMM wechselt je Kommando, LED_ERROR leuchtet nach einem Überlauf oder
+   Rahmenfehler. Damit lassen sich Jumper, CP2102N, COM-Port und Baudrate getrennt von
+   USBDriver/USBTask prüfen. Danach den Schalter wieder auf 0 setzen.
+2. **Normale Firmware**: Standort Id 6 kommt jede Sekunde; das Skript sendet Id 10 mit zufälligen
+   Koordinaten und erwartet sofort Id 6 mit denselben Werten. Zum Schluss setzt es den Standort auf
+   den Ursprung zurück (`--keep-position` verhindert das).
+
+Je Runde drei Varianten: ein Kommando je Schreibvorgang, ein Kommando auf zwei Schreibvorgänge
+verteilt (5 ms Pause), zwei Kommandos in einem Schreibvorgang. Geprüft werden außerdem CRC-Fehler und
+übersprungene Bytes im Empfangsstrom. Exit-Code 0 = bestanden. Ohne Hardware:
+`--simulate selftest` bzw. `--simulate firmware`. Die Logik des Selbsttests prüft der Host-Test
+`t_uart_selftest`.
+
+| Befund des Skripts | wahrscheinliche Ursache |
+| --- | --- |
+| „nichts empfangen“ | falscher Port, Jumper JM1/JM2 offen, Firmware nicht geflasht, Board ohne Versorgung |
+| nur Müll, keine gültigen Nachrichten | Baudrate falsch (PC und `SDS110_UART_BAUD` vergleichen, Startmeldung `ist=`) |
+| Senden geht, Rundlauf scheitert | RX-Pfad PA10 ← CP2102N-TXD (Jumper JM1/JM2), TX/RX vertauscht |
+| `ore` > 0 | Board liest zu langsam (Überlauf) |
+
 ## 7. Test auf dem STM32F746G-Discovery (nur Simulation)
 
 Schalter `SDS110_BOARD_DISCO` in `Core/SDS_110/SDS_110_Board.h` auf **1** setzen und neu bauen
