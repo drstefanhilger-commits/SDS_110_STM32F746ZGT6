@@ -32,7 +32,7 @@ USBTask::USBTask() : TaskBase(4096, 0, osPriorityNormal)
     rxQueue_ = xQueueCreate(RX_QUEUE_LEN, sizeof(RxChunk));
     configASSERT(rxQueue_ != nullptr);
     active_ = this;
-    USBDriver::startLink();                          // USART1-Empfang (CP2102N) bzw. nichts bei USB-CDC
+    USBDriver::startLink();                          // UART-Empfang (CP2102N/ESP32-C3) bzw. nichts bei USB-CDC
 }
 
 void USBTask::onUsbReceiveISR(const uint8_t* buf, uint32_t len)

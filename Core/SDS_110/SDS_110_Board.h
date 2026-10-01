@@ -45,10 +45,34 @@
 #if SDS110_BOARD_DISCO && SDS110_SAI_ENABLED
 #error "Discovery-Board: ADAU7118 an SAI1/I2C2 gibt es dort nicht – nur Simulation (SDS110_SAI_ENABLED 0)"
 #endif
+/* UART für die PC-Verbindung bei SDS110_LINK_UART 1.
+ * 3 = USART3 (PD8 TX, PD9 RX) zum ESP32-C3-MINI-1-N4 (Schaltplan Seite „ESP32-C3 Wi-Fi Module“,
+ *     EN über PC13 EN_ESP_CTRL). Der ESP32-C3 reicht die Bytes per WLAN/TCP an den PC-Monitor
+ *     durch (Firmware tools/esp32c3_bridge); Nachrichtenformat unverändert (ICD 2). Standard,
+ *     weil USB auf diesem Board nicht funktioniert (01.10.2026).
+ * 1 = USART1 (PA9/PA10) über den CP2102N, Kabel an USB-C #2. */
+#ifndef SDS110_PC_UART
+#define SDS110_PC_UART 3
+#endif
+#if SDS110_PC_UART != 1 && SDS110_PC_UART != 3
+#error "SDS110_PC_UART: 1 (USART1/CP2102N) oder 3 (USART3/ESP32-C3)"
+#endif
 /* Baudrate USART1 <-> CP2102N; am PC-Monitor dieselbe Baudrate einstellen (bei USB-CDC war sie egal).
  * 921600: ~92 kB/s, reicht für DETECT (Reports, Logger); READ-Streaming (1,6 MB/s) passt nicht. */
 #ifndef SDS110_UART_BAUD
 #define SDS110_UART_BAUD 921600U
+#endif
+/* Baudrate USART3 <-> ESP32-C3; muss zu CONFIG_BRIDGE_UART_BAUD der Brücke passen.
+ * 1 000 000 teilt beide Takte ohne Rest (USART3 54 MHz / 54, ESP32-C3 80 MHz / 80): ~100 kB/s,
+ * Spitzenlast DETECT ~17 kB/s (Detect + UnitReport 5,5 kB/s, Logger bis 11,5 kB/s). */
+#ifndef SDS110_ESP_UART_BAUD
+#define SDS110_ESP_UART_BAUD 1000000U
+#endif
+/* Empfang von USART3 nach dem Start so lange verwerfen (ms): Das ROM des ESP32-C3 gibt beim Booten
+ * Meldungen mit 115200 Baud auf UART0 aus; sie würden sonst als fehlerhafte Kommandos am LCD
+ * erscheinen. Der ESP32-C3 startet mit EN_ESP_CTRL (PC13) in MX_GPIO_Init. */
+#ifndef SDS110_ESP_BOOT_MS
+#define SDS110_ESP_BOOT_MS 1500U
 #endif
 
 #endif /* SDS_110_BOARD_H */

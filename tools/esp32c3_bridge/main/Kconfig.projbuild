@@ -1,0 +1,64 @@
+menu "SDS110 Bridge"
+
+    choice BRIDGE_WIFI_MODE
+        prompt "WLAN-Betriebsart"
+        default BRIDGE_WIFI_AP
+        help
+            AP: Der ESP32-C3 spannt ein eigenes Netz auf, der PC verbindet sich damit
+            (Adresse der Brücke immer 192.168.4.1).
+            STA: Der ESP32-C3 meldet sich in einem vorhandenen WLAN an (Adresse per DHCP,
+            die Brücke meldet sie per UDP-Broadcast, siehe BRIDGE_DISCOVERY_PORT).
+        config BRIDGE_WIFI_AP
+            bool "Access Point (eigenes Netz)"
+        config BRIDGE_WIFI_STA
+            bool "Station (vorhandenes WLAN)"
+    endchoice
+
+    config BRIDGE_AP_SSID
+        string "AP: SSID (an den Namen werden die letzten 2 MAC-Bytes angehängt)"
+        default "SDS110"
+        depends on BRIDGE_WIFI_AP
+    config BRIDGE_AP_PASSWORD
+        string "AP: Passwort (WPA2, mindestens 8 Zeichen)"
+        default "sds110-wlan"
+        depends on BRIDGE_WIFI_AP
+    config BRIDGE_AP_CHANNEL
+        int "AP: Kanal"
+        range 1 13
+        default 6
+        depends on BRIDGE_WIFI_AP
+
+    config BRIDGE_STA_SSID
+        string "STA: SSID des WLANs"
+        default ""
+        depends on BRIDGE_WIFI_STA
+    config BRIDGE_STA_PASSWORD
+        string "STA: Passwort des WLANs"
+        default ""
+        depends on BRIDGE_WIFI_STA
+
+    config BRIDGE_TCP_PORT
+        int "TCP-Port für den PC-Monitor"
+        default 3333
+    config BRIDGE_DISCOVERY_PORT
+        int "UDP-Port der Ankündigung (Broadcast alle 2 s, 0 = aus)"
+        default 3334
+
+    config BRIDGE_OTA_PORT
+        int "TCP-Port für das Firmware-Update per WLAN (0 = aus)"
+        default 3335
+    config BRIDGE_OTA_KEY
+        string "Schlüssel für das Firmware-Update (ohne Leerzeichen, ota_upload.py --key)"
+        default "sds110-ota"
+
+    config BRIDGE_UART_BAUD
+        int "Baudrate UART0 <-> STM32 USART3 (SDS110_ESP_UART_BAUD)"
+        default 1000000
+    config BRIDGE_UART_TX_GPIO
+        int "GPIO TX (Modul-Pin 31 TXD0 -> STM32 PD9)"
+        default 21
+    config BRIDGE_UART_RX_GPIO
+        int "GPIO RX (Modul-Pin 30 RXD0 <- STM32 PD8)"
+        default 20
+
+endmenu

@@ -1,0 +1,5 @@
+# SDS_110 – ESP32-C3-MINI-1-N4: transparente Brücke USART3 (STM32F746) <-> WLAN/TCP (PC-Monitor)
+# Build: idf.py set-target esp32c3 && idf.py build   (ESP-IDF ab 5.1)
+cmake_minimum_required(VERSION 3.16)
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+project(sds110_esp32c3_bridge)

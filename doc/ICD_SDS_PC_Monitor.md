@@ -36,6 +36,7 @@ Schnittstellenbeschreibung (Interface Control Document) zwischen der Sensoreinhe
 
 - **Physik:** USB Full Speed, Klasse CDC-ACM (virtueller COM-Port). Die Baudrate spielt keine Rolle.
 - **STM32F746ZGT6-Board:** USART1 über CP2102N (USB-C #2), virtueller COM-Port des CP210x-Treibers, **921600 Baud, 8N1, ohne Flusssteuerung** (`SDS110_UART_BAUD`). READ-Streaming ist darüber nicht möglich (Bandbreite).
+- **STM32F746ZGT6-Board über WLAN** (`SDS110_PC_UART` 3, seit 01.10.2026): USART3 → ESP32-C3 → TCP. Der PC verbindet sich mit **TCP-Port 3333** der Brücke (Access Point: 192.168.4.1; im vorhandenen WLAN meldet die Brücke ihre Adresse alle 2 s per UDP-Broadcast auf Port 3334: `SDS110-BRIDGE <ip> <port> <mac>`). Die Bytes laufen unverändert durch, Rahmen und CRC wie unten. Mit pyserial: `serial.serial_for_url("socket://192.168.4.1:3333")`. Ein PC zur Zeit; ohne verbundenen PC verwirft die Brücke die Nachrichten. READ-Streaming ist nicht möglich. Die UTC aus Id 7 ist über WLAN nur auf einige ms genau.
 - **Kommandos PC → SDS:**
   - **Bytestrom:** Die Firmware setzt die USB-Pakete zu einem Bytestrom zusammen und löst die Kommandos über Magic und Länge heraus (`CommandAssembler.hpp`, seit 28.09.2026). Ein Paket darf mehrere Kommandos oder den Teil eines Kommandos enthalten; der Host fasst dicht folgende Schreibvorgänge oft zusammen (Befund 32).
   - **Rest eines Kommandos:** Folgt der Rest nicht innerhalb von 20 ms, wird der Anfang verworfen.
@@ -272,6 +273,7 @@ Rahmen wie beim Logger, mit `len_id` = 0x06000090 und `timestamp` = 0. Die Firmw
 
 | Datum | Änderung | PC-Monitor |
 | --- | --- | --- |
+| 01.10.2026 | Transport wahlweise über WLAN (ESP32-C3, TCP-Port 3333, Ankündigung UDP 3334); Format unverändert | Verbindungsart TCP neben COM-Port anbieten (`socket://<ip>:3333`), Brücke über UDP 3334 finden |
 | 28.09.2026 | Read (Id 2): Rohdaten vor 118; Kopf Byte 12–15 jetzt micNr u8, blockNr u8, hopNr u16 (Befund 35) | neues Kopfformat lesen, Lücken über hopNr zählen, Aufnahme als WAV |
 | 28.09.2026 | Kommando Id 10 (Standort) und Nachricht Id 6 (Standort mit Quelle, jede Sekunde) neu | Standort eingeben, speichern, beim Verbinden senden; Id 6 anzeigen |
 | 28.09.2026 | Mehrere und geteilte Kommandos je USB-Paket werden ausgewertet (Befund 32); vorher blieben z. B. Unit-ID und SRP bei laufendem Feedback ohne Wirkung. LCD zeigt die Unit-ID dezimal | keine Änderung nötig; Unit-ID dezimal anzeigen |
